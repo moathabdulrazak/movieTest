@@ -2,23 +2,27 @@
   import axios from "axios";
   import { onMount } from "svelte";
   import MovieCard from "../componets/movieCard.svelte";
-
   const API_KEY = "88d2c735e36149b50c9d46f09826ec06";
-  const BASE_URL = "https://api.themoviedb.org/3/movie/popular";
+  const BASE_URL = "https://api.themoviedb.org/3";
+  const POPULAR_MOVIES_ENDPOINT = "/movie/popular";
+  const SEARCH_MOVIES_ENDPOINT = "/search/movie";
   const DEFAULT_PARAMS = {
     api_key: API_KEY,
     language: "en-US",
+    query: "",
     page: 1,
   };
 
   let movies = [];
-  let totalPages = 0;
   let currentPage = DEFAULT_PARAMS.page;
+  let totalPages = 1;
+  let endpoint = `${BASE_URL}${POPULAR_MOVIES_ENDPOINT}`;
 
   const getMovies = async (params) => {
     try {
-      const res = await axios.get(BASE_URL, { params });
+      const res = await axios.get(endpoint, { params });
       movies = res.data.results;
+      currentPage = res.data.page;
       totalPages = res.data.total_pages;
     } catch (error) {
       console.error(error);
@@ -29,37 +33,57 @@
     getMovies(DEFAULT_PARAMS);
   });
 
-  const handleNextPage = () => {
-    if (currentPage < totalPages) {
-      currentPage++;
-      getMovies({ ...DEFAULT_PARAMS, page: currentPage });
+  const handleSearch = (event) => {
+    event.preventDefault();
+    const query = event.target.query.value.trim();
+    if (query) {
+      endpoint = `${BASE_URL}${SEARCH_MOVIES_ENDPOINT}`;
+      getMovies({ ...DEFAULT_PARAMS, query });
+    } else {
+      endpoint = `${BASE_URL}${POPULAR_MOVIES_ENDPOINT}`;
+      getMovies(DEFAULT_PARAMS);
     }
   };
 
-  const handlePrevPage = () => {
+  const handlePreviousPage = () => {
     if (currentPage > 1) {
-      currentPage--;
-      getMovies({ ...DEFAULT_PARAMS, page: currentPage });
+      getMovies({ ...DEFAULT_PARAMS, page: currentPage - 1 });
+    }
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      getMovies({ ...DEFAULT_PARAMS, page: currentPage + 1 });
     }
   };
 </script>
 
+<form class="search-form" on:submit={handleSearch}>
+  <label for="query">Search:</label>
+  <input type="text" id="query" name="query" />
+  <button type="submit">Go</button>
+</form>
+
 <div class="movie-list">
-  {#each movies as movieData}
-    <MovieCard movie={movieData} />
-  {/each}
+  {#if movies.length > 0}
+    {#each movies as movie}
+      <MovieCard {movie} />
+    {/each}
+  {:else}
+    <p>No movies found.</p>
+  {/if}
 </div>
 
 <div class="pagination">
-  <button on:click={handlePrevPage} disabled={currentPage === 1}>
-    Previous
-  </button>
-  <button on:click={handleNextPage} disabled={currentPage === totalPages}>
-    Next
-  </button>
+  <button on:click={handlePreviousPage} disabled={currentPage === 1}
+    >Previous</button
+  >
+  <span>{currentPage}/{totalPages}</span>
+  <button on:click={handleNextPage} disabled={currentPage === totalPages}
+    >Next</button
+  >
 </div>
 
-<!-- App.svelte -->
 <style>
   .movie-list {
     display: flex;
@@ -90,5 +114,21 @@
     background-color: gray;
     color: white;
     cursor: not-allowed;
+  }
+  .search-form {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+  }
+  .search-form label {
+    font-size: 1.2rem;
+    margin-right: 10px;
+  }
+  .search-form input {
+    font-size: 1rem;
+    padding: 5px 10px;
+    border: 1px solid gray;
+    border-radius: 5px;
+    width: 300px;
   }
 </style>

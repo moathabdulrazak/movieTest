@@ -1,10 +1,8 @@
 <script>
   export let movie;
-  // Declare the prop that will be passed to this component
   const props = {
     movie: {},
   };
-  console.log();
 </script>
 
 <div class="movie-card">
