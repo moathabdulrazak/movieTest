@@ -58,6 +58,8 @@
   };
 </script>
 
+<h1 class="text-vfx">movies</h1>
+
 <form class="search-form" on:submit={handleSearch}>
   <label for="query">Search:</label>
   <input type="text" id="query" name="query" />
@@ -85,6 +87,9 @@
 </div>
 
 <style>
+  .text-vfx {
+    text-align: center;
+  }
   .movie-list {
     display: flex;
     flex-wrap: wrap;
