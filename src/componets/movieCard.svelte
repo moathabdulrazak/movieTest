@@ -1,7 +1,7 @@
 <script>
   export let movie;
-  let embeddedLink = "";
   let isModalOpen = false;
+  let embeddedLink = "";
 
   function openModal() {
     embeddedLink = `https://autoembed.to/movie/tmdb/${movie.id}`;
@@ -9,8 +9,21 @@
   }
 
   function closeModal() {
-    embeddedLink = "";
     isModalOpen = false;
+  }
+
+  function handleKeyDown(event) {
+    if (event.key === "Escape") {
+      closeModal();
+    }
+  }
+
+  function handleIframeLoad() {
+    const iframe = document.querySelector("#modal-iframe");
+    if (iframe) {
+      iframe.contentWindow.focus();
+      iframe.contentWindow.document.body.style.overflow = "hidden";
+    }
   }
 </script>
 
@@ -23,16 +36,22 @@
     <h2>{movie.title}</h2>
     <p>{movie.overview}</p>
   </div>
-
-  {#if isModalOpen}
-    <div class="modal">
-      <div class="modal-content">
-        <iframe src={embeddedLink} frameborder="0" allowfullscreen />
-        <button class="close" on:click={closeModal}>X</button>
-      </div>
-    </div>
-  {/if}
 </div>
+
+{#if isModalOpen}
+  <div class="modal" tabindex="-1" on:keydown={handleKeyDown}>
+    <div class="modal-content">
+      <button class="close" on:click={closeModal}>X</button>
+      <iframe
+        id="modal-iframe"
+        src={embeddedLink}
+        frameborder="0"
+        allowfullscreen
+        onload={handleIframeLoad}
+      />
+    </div>
+  </div>
+{/if}
 
 <style>
   .movie-card {
@@ -75,15 +94,32 @@
     z-index: 1;
   }
 
+  .modal:focus {
+    outline: none;
+  }
+
   .modal-content {
+    position: relative;
+    width: 80%;
+    height: 80%;
+    max-width: 800px;
+    max-height: 600px;
     background-color: white;
     border-radius: 10px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     padding: 20px;
-    position: relative;
-    width: 80%;
-    max-height: 80%;
-    overflow: auto;
+  }
+
+  .modal iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    margin: 0;
+    padding: 0;
   }
 
   .close {
