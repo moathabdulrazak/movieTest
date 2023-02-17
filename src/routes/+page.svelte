@@ -92,7 +92,7 @@
   {/if}
 </div>
 
-<div class="pagination">
+<div class="pagination pb-3">
   <button on:click={handlePreviousPage} disabled={currentPage === 1}
     >Previous</button
   >
