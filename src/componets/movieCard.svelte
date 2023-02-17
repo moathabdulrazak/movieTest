@@ -56,13 +56,11 @@
 {/if}
 
 <style>
-  .text-vfx {
-    color: black;
-  }
   .movie-card {
-    background-color: rgb(0, 0, 0);
+    /* background-color: rgb(51 27 61 / 14%);
+    backdrop-filter: blur(15px); */
     border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); */
     padding: 20px;
     width: 300px;
     cursor: pointer;
@@ -73,13 +71,13 @@
     margin-bottom: 10px;
   }
 
-  .movie-card p {
-    font-size: 1rem;
-    line-height: 1.5;
-    margin-bottom: 20px;
-  }
-
   .movie-card img {
+    border-radius: 5px;
+    height: 400px;
+    object-fit: cover;
+    width: 98%;
+  }
+  .movie-card img:hover {
     border-radius: 5px;
     height: 400px;
     object-fit: cover;
@@ -95,7 +93,8 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgb(51 27 61 / 14%);
+    backdrop-filter: blur(15px);
     z-index: 1;
   }
 

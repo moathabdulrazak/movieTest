@@ -48,17 +48,28 @@
   const handlePreviousPage = () => {
     if (currentPage > 1) {
       getMovies({ ...DEFAULT_PARAMS, page: currentPage - 1 });
+      scrollToTop();
     }
   };
 
   const handleNextPage = () => {
     if (currentPage < totalPages) {
       getMovies({ ...DEFAULT_PARAMS, page: currentPage + 1 });
+      scrollToTop();
     }
+  };
+
+  const scrollToTop = () => {
+    const scrollOptions = {
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    };
+    window.scrollTo(scrollOptions);
   };
 </script>
 
-<form class="search-form" on:submit={handleSearch}>
+<form class="search-form" onsubmit={handleSearch}>
   <label for="query">Search:</label>
   <input type="text" id="query" name="query" />
   <button type="submit">Go</button>
