@@ -34,7 +34,7 @@
       alt={`${movie.title} poster`}
     />
     <h2>{movie.title}</h2>
-    <p>{movie.overview}</p>
+    <!-- <p>{movie.overview}</p> -->
   </div>
 </div>
 
@@ -42,6 +42,8 @@
   <div class="modal" tabindex="-1" on:keydown={handleKeyDown}>
     <div class="modal-content">
       <button class="close" on:click={closeModal}>X</button>
+      <!-- <h2 class="text-vfx">{movie.title}</h2>
+      <p class="text-vfx">{movie.overview}</p> -->
       <iframe
         id="modal-iframe"
         src={embeddedLink}
@@ -54,8 +56,11 @@
 {/if}
 
 <style>
+  .text-vfx {
+    color: black;
+  }
   .movie-card {
-    background-color: white;
+    background-color: rgb(0, 0, 0);
     border-radius: 10px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     padding: 20px;
