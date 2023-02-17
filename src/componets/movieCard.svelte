@@ -33,7 +33,7 @@
       src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
       alt={`${movie.title} poster`}
     />
-    <h2>{movie.title}</h2>
+    <h2 class="pt-2">{movie.title}</h2>
     <h6>{movie.popularity}</h6>
     <!-- <p>{movie.overview}</p> -->
   </div>
