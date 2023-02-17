@@ -34,6 +34,7 @@
       alt={`${movie.title} poster`}
     />
     <h2>{movie.title}</h2>
+    <h6>{movie.popularity}</h6>
     <!-- <p>{movie.overview}</p> -->
   </div>
 </div>
@@ -41,7 +42,6 @@
 {#if isModalOpen}
   <div class="modal" tabindex="-1" on:keydown={handleKeyDown}>
     <div class="modal-content">
-      <button class="close" on:click={closeModal}>X</button>
       <!-- <h2 class="text-vfx">{movie.title}</h2>
       <p class="text-vfx">{movie.overview}</p> -->
       <iframe
@@ -52,6 +52,7 @@
         onload={handleIframeLoad}
       />
     </div>
+    <button class="close px-5 py-3" on:click={closeModal}>X</button>
   </div>
 {/if}
 
@@ -75,13 +76,14 @@
     border-radius: 5px;
     height: 400px;
     object-fit: cover;
-    width: 98%;
+    width: 100%;
   }
   .movie-card img:hover {
     border-radius: 5px;
     height: 400px;
     object-fit: cover;
     width: 100%;
+    transform: scale(1.05);
   }
 
   .modal {

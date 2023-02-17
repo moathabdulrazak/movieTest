@@ -69,11 +69,18 @@
   };
 </script>
 
-<form class="search-form" onsubmit={handleSearch}>
-  <label for="query">Search:</label>
-  <input type="text" id="query" name="query" />
-  <button type="submit">Go</button>
-</form>
+<div class="px-5">
+  <form class="search-form" on:submit={handleSearch}>
+    <input
+      class=""
+      placeholder="Search movies..."
+      type="text"
+      id="query"
+      name="query"
+    />
+    <button class="btn btn-dark" type="submit">search</button>
+  </form>
+</div>
 
 <div class="movie-list">
   {#if movies.length > 0}
@@ -96,9 +103,6 @@
 </div>
 
 <style>
-  .text-vfx {
-    text-align: center;
-  }
   .movie-list {
     display: flex;
     flex-wrap: wrap;
