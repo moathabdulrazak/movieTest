@@ -1,7 +1,7 @@
 <script>
   import axios from "axios";
   import { onMount } from "svelte";
-  import MovieCard from "../componets/movieCard.svelte";
+  import MovieCard from "../../componets/movieCard.svelte";
   const API_KEY = "88d2c735e36149b50c9d46f09826ec06";
   const BASE_URL = "https://api.themoviedb.org/3";
   const POPULAR_MOVIES_ENDPOINT = "/movie/popular";
@@ -70,7 +70,6 @@
 </script>
 
 <a href="/shows">Go to shows page</a>
-<a href="/movies">Go to movies page</a>
 <div class="px-5">
   <form class="search-form" on:submit={handleSearch}>
     <input
